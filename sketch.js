@@ -6,7 +6,7 @@ let sketch = (p5) => {
     squiggleDamp: 0.5,
     showSquiggles: true,
     showCircles: true,
-    continuous: false,
+    continuous: true,
     mouseAng: 0,
     resample: function () {
       console.log("resample");
@@ -28,13 +28,13 @@ let sketch = (p5) => {
   gui.add(state, "showCircles").name("show circles");
   gui.add(state, "circSize").min(0).max(100).step(1);
   gui.add(state, "showSquiggles").name("show squiggles");
-  gui.add(state, "squiggleDamp").min(0).max(1).step(0.1).name("squiggle factor");
   gui
-    .add(state, "layerTrans")
+    .add(state, "squiggleDamp")
     .min(0)
-    .max(255)
-    .step(1)
-    .name("transparency");
+    .max(1)
+    .step(0.1)
+    .name("squiggle factor");
+  gui.add(state, "layerTrans").min(0).max(255).step(1).name("transparency");
   gui.add(state, "generate").name("Generate Layer");
   gui.add(state, "continuous").name("Continuous");
   let resampleFolder = gui.addFolder("Resample");
@@ -47,30 +47,72 @@ let sketch = (p5) => {
   let img;
   let imgArr = [];
 
-  p5.preload = () => {};
-
-
+  function loadFromURL(url) {}
 
   p5.setup = () => {
     p5.angleMode(p5.DEGREES);
     p5.createFileInput(handleFile).style("visibility", "hidden");
     p5.background(34);
+    // let myURL = "https://source.unsplash.com/random /600x900";
+    let myURL =
+      "https://images.unsplash.com/photo-1600683845590-df2e8bc74689?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzl8fGNvbG9yZnVsJTIwYW5pbWFsc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60";
+    img = p5.loadImage(myURL, (img) => {
+      p5.print("img loaded");
+      buildPixelsArray();
+    });
   };
 
   p5.doubleClicked = () => {
     state.continuous = !state.continuous;
-  }
+  };
 
   p5.draw = () => {
-    if(state.continuous) {
+    if (state.continuous) {
       doImage();
     }
-  }
+    // if (p5.keyIsDown(65)) {
+    //   state.circSize-=1
+    // }
+    // if (p5.keyIsDown(68)) {
+    //   state.circSize+=1
+    // }
+    // if (p5.frameCount % 60 === 0) {
+    //   gui.updateDisplay()
+    // }
+  };
+
+  p5.keyTyped = () => {
+    console.log("keyCode: ", p5.keyCode);
+    // console.log("key: ",p5.key);
+    if (p5.keyCode === 32) {
+      state.continuous = !state.continuous;
+    }
+    if (p5.keyCode === 67) {
+      p5.clear();
+    }
+    if (p5.keyCode === 65) {
+      state.circSize -= 1;
+    }
+    if (p5.keyCode === 68) {
+      state.circSize += 1;
+    }
+    if (p5.keyCode === 81) {
+      state.layerTrans -= 1;
+    }
+    if (p5.keyCode === 69) {
+      state.layerTrans += 1;
+    }
+    if (p5.keyCode === 71) {
+      doImage();
+    }
+
+    gui.updateDisplay();
+  };
 
   const handleFile = (file) => {
     img = p5.createImg(file.data, "loaded file", (img) => {
       img.hide();
-      buildPixelsArray(img);
+      buildPixelsArray();
     });
   };
 
@@ -105,9 +147,11 @@ let sketch = (p5) => {
   };
 
   const doImage = () => {
-    console.log("doImage");
-    let extraX = p5.dist(img.width/2, img.height/2, p5.mouseX, p5.mouseY)*state.squiggleDamp;
-    
+    // console.log("doImage");
+    let extraX =
+      p5.dist(p5.mouseX, p5.mouseY, img.width / 2, img.height / 2) *
+      state.squiggleDamp;
+
     p5.noFill();
 
     for (let i = 0; i < imgArr.length; i++) {
@@ -139,7 +183,10 @@ let sketch = (p5) => {
         );
       }
       p5.pop();
-      state.mouseAng = p5.atan2(p5.mouseX - img.width/2, p5.mouseY - img.height/2);
+      state.mouseAng = p5.atan2(
+        p5.mouseY - img.height / 2,
+        p5.mouseX - img.width / 2
+      );
     }
   };
 };
