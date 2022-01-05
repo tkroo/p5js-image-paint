@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>image paint</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>"
+    />
+    <script src="p5.min.js"></script>
+    <script src="dat.gui.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <!-- <script src="../addons/p5.sound.js"></script> -->
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>image paint</title>
-  <link rel='icon' href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>'>
-  <script src="p5.min.js"></script>
-  <script src="dat.gui.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <!-- <script src="../addons/p5.sound.js"></script> -->
-</head>
-
-<body>
-  <main>
-  </main>
-  <script src="sketch.js"></script>
-</body>
-
+  <body>
+    <main></main>
+    <div class="info">
+      <p>move the mouse around while running</p>
+      <h2>keys</h2>
+      <p>g = generate once</p>
+      <p>space = start/stop continuous generation</p>
+      <p>a = smaller circles</p>
+      <p>d = larger circles</p>
+      <p>q = more transparent</p>
+      <p>e = less transparent</p>
+      <p>c = clear</p>
+    </div>
+    <script src="sketch.js"></script>
+  </body>
 </html>
