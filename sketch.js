@@ -84,7 +84,6 @@ let sketch = (p5) => {
     let newCanvasY = (p5.windowHeight - img.height) / 2;
     cnv.position(newCanvasX, newCanvasY);
     cnv.style("border", "4px solid black");
-    // p5.image(img, img.width, 0, img.width, img.height);
     p5.image(img, 0, 0, img.width, img.height);
 
     p5.loadPixels();
@@ -105,20 +104,10 @@ let sketch = (p5) => {
     }
   };
 
-  // p5.doubleClicked = () => {
-  //   doImage();
-  //   // clear();
-  // };
-
   const doImage = () => {
     console.log("doImage");
-    // let extraX = p5.map(p5.mouseX, 0, p5.windowWidth, 0, 360);
     let extraX = p5.dist(img.width/2, img.height/2, p5.mouseX, p5.mouseY)*state.squiggleDamp;
-    // let extraY = p5.map(p5.mouseY, 0, p5.windowHeight, 0, 360);
-    // let a = p5.atan2(
-    //   p5.mouseY - p5.windowHeight / 2,
-    //   p5.mouseX - p5.windowWidth / 2
-    // );
+    
     p5.noFill();
 
     for (let i = 0; i < imgArr.length; i++) {
@@ -129,7 +118,6 @@ let sketch = (p5) => {
       let cc = p5.color(c);
       cc.setAlpha(state.layerTrans);
       p5.stroke(cc);
-      // strokeWeight(random(max(img.width,img.height)/40));
       if (state.showCircles) {
         p5.strokeWeight(p5.random(state.circSize));
         p5.point(posx, posy);
@@ -138,7 +126,6 @@ let sketch = (p5) => {
       p5.translate(posx, posy);
       if (state.showSquiggles) {
         p5.strokeWeight(p5.random(p5.max(img.width, img.height) / 200));
-        // rotate(radians(random(360)))
         p5.rotate(state.mouseAng);
         p5.curve(
           posx,
@@ -153,12 +140,6 @@ let sketch = (p5) => {
       }
       p5.pop();
       state.mouseAng = p5.atan2(p5.mouseX - img.width/2, p5.mouseY - img.height/2);
-      // TEST CENTER
-      // p5.push();
-      // p5.stroke(255, 0, 0);
-      // p5.text("X",img.width/2, img.height/2)
-      // p5.circle(img.width/2, img.height/2, 200);
-      // p5.pop();
     }
   };
 };
