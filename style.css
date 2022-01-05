@@ -1,0 +1,18 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  font-family: Montserrat, Roboto, sans-serif;
+  color: #eee;
+  background-color: #222;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  /* border: 2px dashed #b4b4b4; */
+}
